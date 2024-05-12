@@ -22,16 +22,26 @@ function App() {
   //la cantidad que hay en nuestro array
   const totalTodos = todos.length;
 
+  //por cada todo preguntamos si incluye en alguna parte ese texto nuestro searchvalue el cual cambia con lo que escribe el usuario
+  const searchedTodos = todos.filter(
+    (todo) => {
+      const todoText = todo.text.toLowerCase();
+      const searchText = searchValue.toLowerCase();
+      return todoText.includes(searchText);
+    });
+
 
   return (
     <>
       <TodoCounter 
         completed={completedTodos} 
         total={totalTodos} />
-      <TodoSearch />
-
+      <TodoSearch 
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+      />
       <TodoList>
-        {defaultTodos.map(todo => (
+        {searchedTodos.map(todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
