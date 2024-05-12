@@ -4,8 +4,8 @@
     margin: 0;
     padding: 48px;
     font-weight: normal;
-}
+  }
   
-.TodoCounter span {
+  .TodoCounter span {
     font-weight: bold;
-}
+  }
