@@ -5,16 +5,29 @@ import { TodoList } from './TodoList';
 import { TodoItem } from './TodoItem';
 import { CreateTodoButton } from './CreateTodoButton';
 
-const defaultTodos = [
-  { text: 'Cortar cebolla', completed: true },
-  { text: 'Tomar el Curso de Intro a React.js', completed: true },
-  { text: 'Llorar con la Llorona', completed: false },
-  { text: 'LALALALALA', completed: false },
-  { text: 'cafe', completed: true },
-];
+// const defaultTodos = [
+//   { text: 'Cortar cebolla', completed: true },
+//   { text: 'Tomar el Curso de Intro a React.js', completed: true },
+//   { text: 'Llorar con la Llorona', completed: false },
+//   { text: 'LALALALALA', completed: false },
+//   { text: 'cafe', completed: true },
+// ];
+// localStorage.setItem('TODOS_V1', defaultTodos);
+// localStorage.removeItem('TODOS_V1');
 
 function App() {
-  const [todos,setTodos] = React.useState(defaultTodos);
+  const localStorageTodos = localStorage.getItem('TODOS_V1');
+
+  let parseTodos;
+
+  if(!localStorageTodos){
+    localStorage.setItem('TODOS_V1', JSON.stringify([]));
+    parseTodos = [];
+  }else{
+    parseTodos = JSON.parse(localStorageTodos);
+  }
+
+  const [todos,setTodos] = React.useState(parseTodos);
   const [searchValue, setSearchValue] = React.useState('');
   
   //si en el array de todos aparecen true deben contabilizarlos
@@ -28,17 +41,22 @@ function App() {
       const todoText = todo.text.toLowerCase();
       const searchText = searchValue.toLowerCase();
       return todoText.includes(searchText);
-    });
+  });
 
-    //
-    const completeTodo = (text) => {
+  const saveTodos = (newTodos) => {
+    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos)); //Actualizando ellocal storage
+
+    setTodos(newTodos); //actualizandolo en el estado
+  };
+   //
+  const completeTodo = (text) => {
       const newTodos = [...todos];
       const todoIndex = newTodos.findIndex(
         (todo) => todo.text == text
       );
       newTodos[todoIndex].completed = true;
-      setTodos(newTodos);
-    };
+      saveTodos(newTodos);
+  };
 
     const deleteTodo = (text) => {
       const newTodos = [...todos];
@@ -46,7 +64,7 @@ function App() {
         (todo) => todo.text == text
       );
       newTodos.splice(todoIndex, 1);
-      setTodos(newTodos);
+      saveTodos(newTodos);
     };
     
   return (
