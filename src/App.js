@@ -7,15 +7,27 @@ import { CreateTodoButton } from './CreateTodoButton';
 
 const defaultTodos = [
   { text: 'Cortar cebolla', completed: true },
-  { text: 'Tomar el Curso de Intro a React.js', completed: false },
+  { text: 'Tomar el Curso de Intro a React.js', completed: true },
   { text: 'Llorar con la Llorona', completed: false },
   { text: 'LALALALALA', completed: false },
+  { text: 'cafe', completed: true },
 ];
 
 function App() {
+  const [todos,setTodos] = React.useState(defaultTodos);
+  const [searchValue, setSearchValue] = React.useState('');
+  
+  //si en el array de todos aparecen true deben contabilizarlos
+  const completedTodos = todos.filter(todo => !!todo.completed).length;
+  //la cantidad que hay en nuestro array
+  const totalTodos = todos.length;
+
+
   return (
     <>
-      <TodoCounter completed={16} total={25} />
+      <TodoCounter 
+        completed={completedTodos} 
+        total={totalTodos} />
       <TodoSearch />
 
       <TodoList>
