@@ -1,7 +1,7 @@
 import React from "react";
 import './TodoItem.css';
-import { CompleteIcon } from "./CompleteIcon";
-import { DeleteIcon } from "./DeleteIcon";
+import { CompleteIcon } from "../icon/CompleteIcon";
+import { DeleteIcon } from "../icon/DeleteIcon";
 
 function TodoItem(props) {
   return (
